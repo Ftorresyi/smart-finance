@@ -1,6 +1,11 @@
 package Finance.organizador_financeiro.domain;
 
-public enum TransactionType {
-    INCOME,
-    EXPENSE
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
+public class TransactionType {
+    @Id
+    private Long id;
+    private String name;
 }
