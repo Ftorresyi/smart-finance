@@ -22,7 +22,7 @@ public class Transaction {
     @Column(nullable = false)
     private BigDecimal amount;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private TransactionType type;
 
     private LocalDate date;

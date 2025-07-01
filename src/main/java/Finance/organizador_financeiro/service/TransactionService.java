@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionService {
@@ -20,7 +21,9 @@ public class TransactionService {
         this.mapper = mapper;
     }
     public List<TransactionDTO> findAll() {
-        return repository.findAll();
+        return repository.findAll().stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
     }
     public TransactionDTO create(TransactionDTO dto) {
         Transaction entity = mapper.toEntity(dto);
@@ -35,5 +38,9 @@ public class TransactionService {
     }
     public void delete(Long id){
         repository.deleteById(id);
+    }
+
+    public Optional<TransactionDTO> findById(Long id){
+        return repository.findById(id).map(mapper::toDTO);
     }
 }
