@@ -31,8 +31,8 @@ This checklist outlines the essential features of a personal financial managemen
 - [x] Delete Categories
 
 ### 4. Reporting and Analytics
-- [ ] Summary of Income vs. Expenses
-- [ ] Spending by Category
+- [x] Summary of Income vs. Expenses
+- [x] Spending by Category
 - [ ] Monthly/Annual Reports
 - [ ] Budgeting (Setting limits for categories)
 

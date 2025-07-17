@@ -1,0 +1,22 @@
+feat: Implement category management and user profile/password features
+
+This commit introduces several new functionalities:
+
+- **Category Management:**
+  - Added `CategoryRepository` for data persistence.
+  - Implemented `CategoryService` for business logic (CRUD operations).
+  - Created `CategoryController` to expose REST endpoints.
+  - Modified `Category` entity to associate categories with specific users.
+
+- **User Profile Management:**
+  - Updated `UserDTO` to remove sensitive information and align with project style.
+  - Enhanced `UserService` with methods to retrieve and update authenticated user profiles.
+  - Modified `UserController` to provide endpoints for viewing and editing user profiles (`/api/users/me`).
+
+- **Password Change:**
+  - Introduced `ChangePasswordDTO` for secure password update requests.
+  - Added `changePassword` method to `UserService` for authenticated users.
+  - Implemented a REST endpoint in `UserController` for password changes (`/api/users/change-password`).
+
+- **Documentation:**
+  - Updated `README.md` to reflect the completion of Category Management and User Profile/Password features.
