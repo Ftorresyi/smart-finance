@@ -19,6 +19,10 @@ public class Category {
     private String name;
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id") // Foreign key to the User table
+    private User user;
+
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transaction> transactions;
 }
