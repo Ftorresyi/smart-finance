@@ -1,22 +1,19 @@
-feat: Implement category management and user profile/password features
+feat: Implement basic reporting and analytics features
 
-This commit introduces several new functionalities:
+This commit introduces the initial reporting and analytics functionalities:
 
-- **Category Management:**
-  - Added `CategoryRepository` for data persistence.
-  - Implemented `CategoryService` for business logic (CRUD operations).
-  - Created `CategoryController` to expose REST endpoints.
-  - Modified `Category` entity to associate categories with specific users.
+- **Summary of Income vs. Expenses:**
+  - Created `SummaryReportDTO` to encapsulate income, expenses, and net balance.
+  - Added `getSummaryReport` method to `ReportService` to calculate these values for a given period.
+  - Exposed a REST endpoint (`/api/reports/summary`) in `ReportController`.
 
-- **User Profile Management:**
-  - Updated `UserDTO` to remove sensitive information and align with project style.
-  - Enhanced `UserService` with methods to retrieve and update authenticated user profiles.
-  - Modified `UserController` to provide endpoints for viewing and editing user profiles (`/api/users/me`).
+- **Spending by Category:**
+  - Created `CategorySpendingDTO` to represent spending per category.
+  - Added `getSpendingByCategory` method to `ReportService` to aggregate expenses by category for a given period.
+  - Exposed a REST endpoint (`/api/reports/spending-by-category`) in `ReportController`.
 
-- **Password Change:**
-  - Introduced `ChangePasswordDTO` for secure password update requests.
-  - Added `changePassword` method to `UserService` for authenticated users.
-  - Implemented a REST endpoint in `UserController` for password changes (`/api/users/change-password`).
+- **Data Access Layer:**
+  - Added `findByUserAndDateBetween` method to `TransactionRepository` to support date-range filtering for reports.
 
 - **Documentation:**
-  - Updated `README.md` to reflect the completion of Category Management and User Profile/Password features.
+  - Updated `README.md` to reflect the completion of these reporting features.

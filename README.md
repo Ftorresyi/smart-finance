@@ -33,7 +33,7 @@ This checklist outlines the essential features of a personal financial managemen
 ### 4. Reporting and Analytics
 - [x] Summary of Income vs. Expenses
 - [x] Spending by Category
-- [ ] Monthly/Annual Reports
+- [x] Monthly/Annual Reports
 - [ ] Budgeting (Setting limits for categories)
 
 ### 5. Account Management (Optional)

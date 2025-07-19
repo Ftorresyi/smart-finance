@@ -1,6 +1,7 @@
 package Finance.organizador_financeiro.controller;
 
 import Finance.organizador_financeiro.dto.CategorySpendingDTO;
+import Finance.organizador_financeiro.dto.MonthlyAnnualReportDTO;
 import Finance.organizador_financeiro.dto.SummaryReportDTO;
 import Finance.organizador_financeiro.service.ReportService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,5 +38,20 @@ public class ReportController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         List<CategorySpendingDTO> spending = reportService.getSpendingByCategory(startDate, endDate);
         return ResponseEntity.ok(spending);
+    }
+
+    @GetMapping("/monthly")
+    public ResponseEntity<List<MonthlyAnnualReportDTO>> getMonthlyReports(
+            @RequestParam int year) {
+        List<MonthlyAnnualReportDTO> monthlyReports = reportService.getMonthlyReports(year);
+        return ResponseEntity.ok(monthlyReports);
+    }
+
+    @GetMapping("/annual")
+    public ResponseEntity<List<MonthlyAnnualReportDTO>> getAnnualReports(
+            @RequestParam int startYear,
+            @RequestParam int endYear) {
+        List<MonthlyAnnualReportDTO> annualReports = reportService.getAnnualReports(startYear, endYear);
+        return ResponseEntity.ok(annualReports);
     }
 }
