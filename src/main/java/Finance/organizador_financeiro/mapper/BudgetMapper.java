@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.time.YearMonth;
 
-@Mapper(componentModel = "spring", uses = {CategoryMapper.class}) // 'uses' para que o MapStruct saiba como mapear Category
+@Mapper(componentModel = "spring", uses = {CategoryMapper.class}) // Added CategoryMapper for Category mapping
 public interface BudgetMapper {
 
     BudgetMapper INSTANCE = Mappers.getMapper(BudgetMapper.class);
@@ -21,11 +21,11 @@ public interface BudgetMapper {
     BudgetDTO toDTO(Budget budget);
 
     @Mapping(target = "category", source = "categoryId", qualifiedByName = "mapCategoryFromId")
-    @Mapping(target = "user", ignore = true) // O usuário será definido no serviço
-    @Mapping(target = "period", expression = "java(YearMonth.parse(budgetDTO.getPeriod()))")
+    @Mapping(target = "user", ignore = true) // The user will be set in the service
+    @Mapping(target = "period", expression = "java(java.time.YearMonth.parse(budgetDTO.getPeriod()))") // Use fully qualified name
     Budget toEntity(BudgetDTO budgetDTO);
 
-    // Método auxiliar para mapear Category a partir do ID, se necessário
+    // Helper method to map Category from ID, if necessary
     @Named("mapCategoryFromId")
     default Category mapCategoryFromId(Long categoryId) {
         if (categoryId == null) {

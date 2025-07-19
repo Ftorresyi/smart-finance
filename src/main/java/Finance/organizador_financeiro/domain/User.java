@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "users") // Renomeando a tabela para evitar conflito com a palavra reservada "user" em alguns bancos de dados
+@Table(name = "users") // Renaming the table to avoid conflict with the reserved word "user" in some databases
 public class User implements UserDetails {
 
     @Id
@@ -26,40 +26,40 @@ public class User implements UserDetails {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Lancamento> lancamentos; // Corrigindo o nome da propriedade para refletir a entidade Lancamento
+    private List<Transaction> transactions; // Mapping to user's transactions
 
-    // Métodos da interface UserDetails
+    // Methods from UserDetails interface
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Por enquanto, não estamos usando roles (perfis de usuário), então retornamos uma lista vazia.
-        // Em uma evolução, poderíamos ter roles como "ROLE_USER", "ROLE_ADMIN".
+        // For now, we are not using roles (user profiles), so we return an empty list.
+        // In an evolution, we could have roles like "ROLE_USER", "ROLE_ADMIN".
         return null;
     }
 
     @Override
     public String getUsername() {
-        // O "username" para o Spring Security será o e-mail do nosso usuário.
+        // The "username" for Spring Security will be our user's email.
         return this.email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return true; // A conta nunca expira
+        return true; // Account never expires
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true; // A conta nunca é bloqueada
+        return true; // Account is never locked
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true; // As credenciais nunca expiram
+        return true; // Credentials never expire
     }
 
     @Override
     public boolean isEnabled() {
-        return true; // O usuário está sempre habilitado
+        return true; // User is always enabled
     }
 }
