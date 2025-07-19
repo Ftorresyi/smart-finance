@@ -34,7 +34,7 @@ This checklist outlines the essential features of a personal financial managemen
 - [x] Summary of Income vs. Expenses
 - [x] Spending by Category
 - [x] Monthly/Annual Reports
-- [ ] Budgeting (Setting limits for categories)
+- [x] Budgeting (Setting limits for categories)
 
 ### 5. Account Management (Optional)
 - [ ] Manage Multiple Bank Accounts/Wallets

@@ -1,19 +1,16 @@
-feat: Implement basic reporting and analytics features
+feat: Add monthly and annual reporting capabilities
 
-This commit introduces the initial reporting and analytics functionalities:
+This commit introduces monthly and annual reporting functionalities:
 
-- **Summary of Income vs. Expenses:**
-  - Created `SummaryReportDTO` to encapsulate income, expenses, and net balance.
-  - Added `getSummaryReport` method to `ReportService` to calculate these values for a given period.
-  - Exposed a REST endpoint (`/api/reports/summary`) in `ReportController`.
+- **Monthly/Annual Report DTO:**
+  - Created `MonthlyAnnualReportDTO` to represent aggregated data for monthly and annual reports.
 
-- **Spending by Category:**
-  - Created `CategorySpendingDTO` to represent spending per category.
-  - Added `getSpendingByCategory` method to `ReportService` to aggregate expenses by category for a given period.
-  - Exposed a REST endpoint (`/api/reports/spending-by-category`) in `ReportController`.
+- **ReportService Enhancements:**
+  - Added `getMonthlyReports` method to generate reports grouped by month for a given year.
+  - Added `getAnnualReports` method to generate reports grouped by year for a specified range.
 
-- **Data Access Layer:**
-  - Added `findByUserAndDateBetween` method to `TransactionRepository` to support date-range filtering for reports.
+- **ReportController Enhancements:**
+  - Exposed new REST endpoints (`/api/reports/monthly` and `/api/reports/annual`) for accessing these reports.
 
 - **Documentation:**
-  - Updated `README.md` to reflect the completion of these reporting features.
+  - Updated `README.md` to reflect the completion of monthly and annual reporting features.
