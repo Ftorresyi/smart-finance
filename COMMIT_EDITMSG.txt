@@ -1,16 +1,20 @@
-feat: Add monthly and annual reporting capabilities
+refactor: Use Lombok for DTOs and configure MapStruct
 
-This commit introduces monthly and annual reporting functionalities:
+This commit refactors all DTOs to use Lombok annotations for conciseness and readability. It also includes the necessary configurations and adjustments for MapStruct to work seamlessly with Lombok-generated code.
 
-- **Monthly/Annual Report DTO:**
-  - Created `MonthlyAnnualReportDTO` to represent aggregated data for monthly and annual reports.
+- **DTO Refactoring:**
+  - Applied `@Data`, `@NoArgsConstructor`, and `@AllArgsConstructor` to all DTOs (`TransactionDTO`, `BudgetDTO`, `CategoryDTO`, `CategorySpendingDTO`, `ChangePasswordDTO`, `LoginDTO`, `LoginResponseDTO`, `MonthlyAnnualReportDTO`, `RegisterDTO`, `SummaryReportDTO`, `TransactionTypeDTO`, `UserDTO`).
+  - Removed manual getters, setters, and constructors from DTOs.
 
-- **ReportService Enhancements:**
-  - Added `getMonthlyReports` method to generate reports grouped by month for a given year.
-  - Added `getAnnualReports` method to generate reports grouped by year for a specified range.
+- **Entity Refactoring:**
+  - Applied `@Data`, `@NoArgsConstructor`, and `@AllArgsConstructor` to `TransactionType` entity to ensure proper setter generation for MapStruct.
+  - Corrected `User` entity to use `List<Transaction>` instead of `List<Lancamento>`.
 
-- **ReportController Enhancements:**
-  - Exposed new REST endpoints (`/api/reports/monthly` and `/api/reports/annual`) for accessing these reports.
+- **MapStruct Configuration and Adjustments:**
+  - Enabled `mapstruct-processor` in `pom.xml` for annotation processing.
+  - Adjusted `BudgetMapper` to use fully qualified name for `YearMonth` in expressions.
+  - Corrected `TransactionMapper` to explicitly map `type.name` to `type` using a `@Named` method and added `ignore = true` for `user` and `category` in `toEntity` mapping.
+  - Adjusted `TransactionTypeMapper` to explicitly map `id` and `name` for `toEntity` method.
 
 - **Documentation:**
-  - Updated `README.md` to reflect the completion of monthly and annual reporting features.
+  - Created `ARCHITECTURE.md` to document the project's architecture, including the rationale behind DTOs, mappers (MapStruct), and reporting DTOs.
