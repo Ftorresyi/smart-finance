@@ -9,19 +9,18 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-@Mapper(componentModel = "spring", uses = {CategoryMapper.class}) // Added CategoryMapper for Category mapping
+@Mapper(componentModel = "spring") // Added CategoryMapper for Category mapping
 public interface TransactionMapper {
 
     @Mapping(source = "category.id", target = "categoryId")
     @Mapping(source = "user.id", target = "userId")
-    @Mapping(target = "type", source = "type", qualifiedByName = "mapTransactionTypeName") // Use a named method for type mapping
+    @Mapping(source = "type.name", target = "type") //Discusses how to convert TransactionType to String
     TransactionDTO toDTO(Transaction entity);
 
-    @Mapping(source = "categoryId", target = "category.id")
-    @Mapping(source = "userId", target = "user.id")
-    @Mapping(target = "type", source = "type", qualifiedByName = "mapTransactionTypeFromString") // Uses named method to convert String to TransactionType
-    @Mapping(target = "user", ignore = true) // The user will be set in the service
-    @Mapping(target = "category", ignore = true) // The category will be set in the service
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "category", ignore = true)
+    @Mapping(target = "type", ignore = true) //Ignores the conversion from String to TransactionType
     Transaction toEntity(TransactionDTO dto);
 
     @Named("mapTransactionTypeName")

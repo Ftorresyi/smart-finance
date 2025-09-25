@@ -12,6 +12,7 @@ import java.time.YearMonth;
 @AllArgsConstructor
 public class BudgetDTO {
     private Long id;
+    private Long userId;
     private Long categoryId;
     private String categoryName;
     private BigDecimal amount;

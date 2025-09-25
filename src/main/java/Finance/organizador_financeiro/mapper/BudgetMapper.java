@@ -6,23 +6,19 @@ import Finance.organizador_financeiro.dto.BudgetDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
-
-import java.time.YearMonth;
-
-@Mapper(componentModel = "spring", uses = {CategoryMapper.class}) // Added CategoryMapper for Category mapping
+@Mapper(componentModel = "spring")
 public interface BudgetMapper {
-
-    BudgetMapper INSTANCE = Mappers.getMapper(BudgetMapper.class);
 
     @Mapping(source = "category.id", target = "categoryId")
     @Mapping(source = "category.name", target = "categoryName")
+    @Mapping(source = "user.id", target = "userId")
     @Mapping(target = "period", expression = "java(budget.getPeriod().toString())")
     BudgetDTO toDTO(Budget budget);
 
-    @Mapping(target = "category", source = "categoryId", qualifiedByName = "mapCategoryFromId")
-    @Mapping(target = "user", ignore = true) // The user will be set in the service
-    @Mapping(target = "period", expression = "java(java.time.YearMonth.parse(budgetDTO.getPeriod()))") // Use fully qualified name
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "category", ignore = true)
+    @Mapping(target = "period", expression = "java(java.time.YearMonth.parse(budgetDTO.getPeriod()))")
     Budget toEntity(BudgetDTO budgetDTO);
 
     // Helper method to map Category from ID, if necessary

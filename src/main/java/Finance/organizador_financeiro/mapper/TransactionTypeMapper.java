@@ -9,7 +9,5 @@ import org.mapstruct.Mapping;
 public interface TransactionTypeMapper {
     TransactionTypeDTO toDTO(TransactionType entity);
 
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "name", source = "name")
     TransactionType toEntity(TransactionTypeDTO dto);
 }
