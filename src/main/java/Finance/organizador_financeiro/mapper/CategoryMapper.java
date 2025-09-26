@@ -11,5 +11,7 @@ public interface CategoryMapper {
 
     CategoryDTO toDTO(Category entity);
 
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "transactions", ignore = true)
     Category toEntity(CategoryDTO dto);
 }
