@@ -1,13 +1,17 @@
 package Finance.organizador_financeiro.service;
 
+import Finance.organizador_financeiro.domain.Category;
 import Finance.organizador_financeiro.domain.Transaction;
 import Finance.organizador_financeiro.domain.User;
 import Finance.organizador_financeiro.dto.TransactionDTO;
 import Finance.organizador_financeiro.mapper.TransactionMapper;
+import Finance.organizador_financeiro.repository.CategoryRepository;
 import Finance.organizador_financeiro.repository.TransactionRepository;
 import Finance.organizador_financeiro.security.AuthenticationComponent;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,11 +21,17 @@ import java.util.stream.Collectors;
 public class TransactionService {
 
     private final TransactionRepository repository;
+    private final CategoryRepository categoryRepository;
     private final TransactionMapper mapper;
     private final AuthenticationComponent authenticationComponent;
 
-    public TransactionService(TransactionRepository repository, TransactionMapper mapper, AuthenticationComponent authenticationComponent) {
+    public TransactionService(
+            TransactionRepository repository,
+            CategoryRepository categoryRepository,
+            TransactionMapper mapper,
+            AuthenticationComponent authenticationComponent) {
         this.repository = repository;
+        this.categoryRepository = categoryRepository;
         this.mapper = mapper;
         this.authenticationComponent = authenticationComponent;
     }
@@ -46,6 +56,7 @@ public class TransactionService {
         User user = authenticationComponent.getAuthenticatedUser();
         Transaction entity = mapper.toEntity(dto);
         entity.setUser(user); // Associa a transação ao usuário logado
+        entity.setCategory(findCategoryForUser(dto.getCategoryId(), user));
         return mapper.toDTO(repository.save(entity));
     }
 
@@ -56,8 +67,17 @@ public class TransactionService {
             Transaction updatedTransaction = mapper.toEntity(dto);
             updatedTransaction.setId(id); // Garante que o ID seja o mesmo
             updatedTransaction.setUser(user); // Garante que o dono da transação não seja alterado
+            updatedTransaction.setCategory(findCategoryForUser(dto.getCategoryId(), user));
             return mapper.toDTO(repository.save(updatedTransaction));
         });
+    }
+
+    private Category findCategoryForUser(Long categoryId, User user) {
+        if (categoryId == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category is required");
+        }
+        return categoryRepository.findByIdAndUser(categoryId, user)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category not found"));
     }
 
     @Transactional

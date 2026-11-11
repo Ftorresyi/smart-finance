@@ -40,6 +40,29 @@ This checklist outlines the essential features of a personal financial managemen
 - [ ] Manage Multiple Bank Accounts/Wallets
 - [ ] Transfer Funds Between Accounts
 
+## Transaction API Contract
+
+Transaction endpoints require a JWT in the `Authorization: Bearer YOUR_JWT` header:
+
+- `GET /transactions` and `GET /transactions/{id}` retrieve transactions for the authenticated user.
+- `POST /transactions` creates a transaction.
+- `PUT /transactions/{id}` updates a transaction owned by the authenticated user.
+- `DELETE /transactions/{id}` deletes a transaction owned by the authenticated user.
+
+Create and update requests use this JSON shape:
+
+```json
+{
+  "amount": 48.50,
+  "date": "2026-11-10",
+  "description": "Lunch",
+  "categoryId": 2,
+  "type": "EXPENSE"
+}
+```
+
+`amount` must be positive, `date`, `description`, `categoryId`, and `type` are required, and `type` must be `INCOME` or `EXPENSE` (case-insensitive; responses use uppercase). For compatibility with the current mobile sync payload, requests may also use `transactionDate` instead of `date`. The category must belong to the authenticated user; the API determines the transaction owner from the JWT rather than trusting a client-supplied `userId`.
+
 ## How to Run
 
 (Instructions on how to build and run the application will be added here later.)

@@ -2,6 +2,7 @@ package Finance.organizador_financeiro.controller;
 
 import Finance.organizador_financeiro.dto.TransactionDTO;
 import Finance.organizador_financeiro.service.TransactionService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +33,16 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<TransactionDTO> create(@RequestBody TransactionDTO dto){
+    public ResponseEntity<TransactionDTO> create(@Valid @RequestBody TransactionDTO dto){
         TransactionDTO created = service. create(dto);
         return new ResponseEntity<>(created,HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TransactionDTO> update(@PathVariable Long id, @Valid @RequestBody TransactionDTO dto) {
+        return service.update(id, dto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

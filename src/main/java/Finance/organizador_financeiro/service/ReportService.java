@@ -36,12 +36,12 @@ public class ReportService {
         List<Transaction> transactions = transactionRepository.findByUserAndDateBetween(user, startDate, endDate);
 
         BigDecimal totalIncome = transactions.stream()
-                .filter(t -> t.getType() != null && t.getType().getName().equals(TipoLancamento.RECEITA.name()))
+                .filter(t -> t.getType() == TipoLancamento.RECEITA)
                 .map(Transaction::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         BigDecimal totalExpenses = transactions.stream()
-                .filter(t -> t.getType() != null && t.getType().getName().equals(TipoLancamento.DESPESA.name()))
+                .filter(t -> t.getType() == TipoLancamento.DESPESA)
                 .map(Transaction::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
@@ -56,7 +56,7 @@ public class ReportService {
         List<Transaction> transactions = transactionRepository.findByUserAndDateBetween(user, startDate, endDate);
 
         Map<String, BigDecimal> spendingMap = transactions.stream()
-                .filter(t -> t.getType() != null && t.getType().getName().equals(TipoLancamento.DESPESA.name()))
+                .filter(t -> t.getType() == TipoLancamento.DESPESA)
                 .collect(Collectors.groupingBy(
                         t -> t.getCategory() != null ? t.getCategory().getName() : "Uncategorized",
                         Collectors.reducing(BigDecimal.ZERO, Transaction::getAmount, BigDecimal::add)
@@ -83,12 +83,12 @@ public class ReportService {
                     List<Transaction> monthTransactions = entry.getValue();
 
                     BigDecimal totalIncome = monthTransactions.stream()
-                            .filter(t -> t.getType() != null && t.getType().getName().equals(TipoLancamento.RECEITA.name()))
+                            .filter(t -> t.getType() == TipoLancamento.RECEITA)
                             .map(Transaction::getAmount)
                             .reduce(BigDecimal.ZERO, BigDecimal::add);
 
                     BigDecimal totalExpenses = monthTransactions.stream()
-                            .filter(t -> t.getType() != null && t.getType().getName().equals(TipoLancamento.DESPESA.name()))
+                            .filter(t -> t.getType() == TipoLancamento.DESPESA)
                             .map(Transaction::getAmount)
                             .reduce(BigDecimal.ZERO, BigDecimal::add);
 
@@ -116,12 +116,12 @@ public class ReportService {
                     List<Transaction> yearTransactions = entry.getValue();
 
                     BigDecimal totalIncome = yearTransactions.stream()
-                            .filter(t -> t.getType() != null && t.getType().getName().equals(TipoLancamento.RECEITA.name()))
+                            .filter(t -> t.getType() == TipoLancamento.RECEITA)
                             .map(Transaction::getAmount)
                             .reduce(BigDecimal.ZERO, BigDecimal::add);
 
                     BigDecimal totalExpenses = yearTransactions.stream()
-                            .filter(t -> t.getType() != null && t.getType().getName().equals(TipoLancamento.DESPESA.name()))
+                            .filter(t -> t.getType() == TipoLancamento.DESPESA)
                             .map(Transaction::getAmount)
                             .reduce(BigDecimal.ZERO, BigDecimal::add);
 

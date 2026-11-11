@@ -6,8 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class OrganizadorFinanceiroApplicationTests {
 
-	//@Test
+	@Test
 	void contextLoads() {
 	}
-
 }

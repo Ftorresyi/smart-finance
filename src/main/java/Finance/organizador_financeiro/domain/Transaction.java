@@ -22,8 +22,9 @@ public class Transaction {
     @Column(nullable = false)
     private BigDecimal amount;
 
-    @ManyToOne
-    private TransactionType type;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TipoLancamento type;
 
     private LocalDate date;
 
